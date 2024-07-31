@@ -1,6 +1,7 @@
 import express from "express";
 import FuncionarioController from "../controller/FuncionarioController.js";
 import CarroController from "../controller/CarroController.js"; 
+import LoginController from "../controller/LoginController.js";
 
 const routes = express.Router();
 
@@ -17,6 +18,10 @@ routes.get("/api/carro/", CarroController.getAllCarros);
 routes.get("/api/carro/:id", CarroController.getCarroById);
 routes.put("/api/carro/:id", CarroController.updateCarro); 
 routes.delete("/api/carro/:id", CarroController.delete); 
+
+// Login
+
+routes.post("/api/login/", LoginController.login)
 
 
 export { routes as default };
