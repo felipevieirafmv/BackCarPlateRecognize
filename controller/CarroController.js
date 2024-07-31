@@ -1,0 +1,114 @@
+import Carro from '../model/carro.js';
+import Funcionario from '../model/funcionario.js'
+
+export default class CarroController {
+    
+    static async getAllCarros(req, res) {
+        try {
+            const carros = await Carro.findAll();
+            return res.status(200).send({ data: carros });
+        } catch (error) {
+            return res.status(500).send({ error: error.message });
+        }
+    }
+
+    static async getCarroById(req, res) {
+        const { id } = req.params;
+        try {
+            const carro = await Carro.findByPk(id);
+            if (!carro) {
+                return res.status(404).send({ message: "Carro não encontrado" });
+            }
+            return res.status(200).json(carro);
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
+
+    static async create(req, res) {
+        const { cor, placa, modelo, ano, funcionarioID } = req.body;
+
+        if (!cor || !placa || !ano || !funcionarioID) {
+            return res.status(400).send({ message: "Todos os campos são obrigatórios!" });
+        }
+
+        const funcionario = await Funcionario.findByPk(funcionarioID);
+
+        if(!funcionario)
+            return res.status(400).send({ message: "Funcionário não encontrado" });
+
+        try {
+            const carro = {
+                Cor: cor,
+                Placa: placa,
+                Modelo: modelo,
+                Ano: ano,
+                FuncionarioID: funcionarioID
+            };
+
+            const createdCarro = await Carro.create(carro);
+
+            return res.status(201).send({ message: "Carro cadastrado com sucesso", body: createdCarro });
+
+        } catch (error) {
+            console.error("Erro ao criar carro: ", error);
+            return res.status(500).send({ error: error.message });
+        }
+    }
+
+    static async updateCarro(req, res) {
+        const { cor, placa, modelo, ano, funcionarioID } = req.body;
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).send({ message: "ID não especificado" });
+        }
+
+        try {
+            const [updated] = await Carro.update(
+                {
+                    Cor: cor,
+                    Placa: placa,
+                    Modelo: modelo,
+                    Ano: ano,
+                    FuncionarioID: funcionarioID
+                },
+                {
+                    where: { ID: id }
+                }
+            );
+
+            if (updated) {
+                const updatedCarro = await Carro.findByPk(id);
+                return res.status(200).send({ message: "Carro atualizado com sucesso", body: updatedCarro });
+            }
+
+            return res.status(404).send({ message: "Carro não encontrado" });
+
+        } catch (error) {
+            return res.status(500).send({ error: error.message });
+        }
+    }
+
+    static async delete(req, res) {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).send({ message: "ID não informado" });
+        }
+
+        try {
+            const deleted = await Carro.destroy({ where: { ID: id } });
+
+            if (!deleted) {
+                return res.status(404).send({ message: "Carro não encontrado" });
+            }
+
+            return res.status(200).send({ message: "Carro deletado com sucesso" });
+
+        } catch (error) {
+            console.error("Erro ao deletar carro:", error);
+            return res.status(500).send({ error: error.message });
+        }
+    }
+}

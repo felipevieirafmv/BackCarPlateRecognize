@@ -3,7 +3,7 @@ import { Sequelize } from "sequelize";
 const dbName = "CarPlateDB";
 const dbUser = "root";
 const dbHost = "localhost";
-const dbPassword = "aluno123";
+const dbPassword = "root";
 
 const db = new Sequelize(dbName, dbUser, dbPassword, {
   dialect: "mysql",

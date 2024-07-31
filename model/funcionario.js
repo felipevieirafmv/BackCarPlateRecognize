@@ -1,36 +1,44 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../startup/db.js';
+import Endereco from './endereco.js';
 
 const Funcionario = sequelize.define('Funcionario', {
   ID: {
     type: DataTypes.INTEGER,
-    primaryKey: true,
     autoIncrement: true,
+    primaryKey: true,
   },
   Nome: {
     type: DataTypes.STRING(80),
     allowNull: false,
   },
   EDV: {
-    type: DataTypes.STRING(8),
+    type: DataTypes.CHAR(8),
     allowNull: false,
   },
   Senha: {
     type: DataTypes.TEXT,
-    allowNull: false,
   },
   Salt: {
     type: DataTypes.STRING(200),
-    allowNull: false,
   },
   Adm: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-  }
+  },
+  EnderecoID: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Endereco,
+      key: 'ID',
+    },
+  },
+}, {
+  tableName: 'Funcionario',
+  timestamps: false,
 });
 
-// Definindo relacionamentos
-// Funcionario.belongsTo(Endereco, { foreignKey: 'EnderecoID' });
-// Funcionario.belongsTo(TipoFuncionario, { foreignKey: 'TipoFuncionarioID' });
+Funcionario.belongsTo(Endereco, { foreignKey: 'EnderecoID' });
+
 
 export default Funcionario;
