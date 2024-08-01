@@ -12,6 +12,19 @@ export default class FuncionarioController {
             return res.status(500).send({ error: error.message });
         }
     }
+    
+    static async getFuncionarioByEdv(req, res) {
+        const { edv } = req.params;
+        try {
+            const funcionario = await Funcionario.findOne({ where: { edv } });
+            if (!funcionario) {
+                return res.status(404).send({ message: "Funcionário não encontrado" });
+            }
+            return res.status(200).json(funcionario);
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
 
     static async getFuncionarioById(req, res) {
         const { id } = req.params;

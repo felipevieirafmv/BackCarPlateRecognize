@@ -9,6 +9,7 @@ const routes = express.Router();
 routes.post("/api/funcionario/", FuncionarioController.create);
 routes.get("/api/funcionario/", FuncionarioController.getAllFuncionario);
 routes.get("/api/funcionario/:id", FuncionarioController.getFuncionarioById);
+routes.get("/api/funcionario/:id", FuncionarioController.getFuncionarioByEdv);
 routes.put("/api/funcionario/:id", FuncionarioController.updateFuncionario);
 routes.delete("/api/funcionario/:id", FuncionarioController.delete);
 

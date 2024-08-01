@@ -1,8 +1,8 @@
 import Carro from '../model/carro.js';
-import Funcionario from '../model/funcionario.js'
+import Funcionario from '../model/funcionario.js';
 
 export default class CarroController {
-    
+
     static async getAllCarros(req, res) {
         try {
             const carros = await Carro.findAll();
@@ -26,35 +26,43 @@ export default class CarroController {
     }
 
     static async create(req, res) {
-        const { cor, placa, modelo, ano, funcionarioID } = req.body;
-
-        if (!cor || !placa || !ano || !funcionarioID) {
+        const { cor, placa, modelo, ano, edv } = req.body;
+    
+        if (!cor || !placa || !ano || !edv) {
             return res.status(400).send({ message: "Todos os campos são obrigatórios!" });
         }
-
-        const funcionario = await Funcionario.findByPk(funcionarioID);
-
-        if(!funcionario)
-            return res.status(400).send({ message: "Funcionário não encontrado" });
-
+    
         try {
+            const funcionario = await Funcionario.findOne({
+                where: {
+                    edv: edv
+                }
+            });
+    
+            if (!funcionario) {
+                return res.status(400).send({ message: "Funcionário não encontrado" });
+            }
+    
             const carro = {
                 Cor: cor,
                 Placa: placa,
                 Modelo: modelo,
                 Ano: ano,
-                FuncionarioID: funcionarioID
+                FuncionarioID: funcionario.id
             };
-
+    
+            console.log("Dados do carro:", carro);
+    
             const createdCarro = await Carro.create(carro);
-
+    
             return res.status(201).send({ message: "Carro cadastrado com sucesso", body: createdCarro });
-
+    
         } catch (error) {
             console.error("Erro ao criar carro: ", error);
             return res.status(500).send({ error: error.message });
         }
     }
+    
 
     static async updateCarro(req, res) {
         const { cor, placa, modelo, ano, funcionarioID } = req.body;
@@ -67,14 +75,14 @@ export default class CarroController {
         try {
             const [updated] = await Carro.update(
                 {
-                    Cor: cor,
-                    Placa: placa,
-                    Modelo: modelo,
-                    Ano: ano,
-                    FuncionarioID: funcionarioID
+                    cor: cor,
+                    placa: placa,
+                    modelo: modelo,
+                    ano: ano,
+                    funcionarioID: funcionarioID
                 },
                 {
-                    where: { ID: id }
+                    where: { id: id }
                 }
             );
 
@@ -98,7 +106,7 @@ export default class CarroController {
         }
 
         try {
-            const deleted = await Carro.destroy({ where: { ID: id } });
+            const deleted = await Carro.destroy({ where: { id: id } });
 
             if (!deleted) {
                 return res.status(404).send({ message: "Carro não encontrado" });
