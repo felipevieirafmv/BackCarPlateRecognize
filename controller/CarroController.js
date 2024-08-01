@@ -42,13 +42,14 @@ export default class CarroController {
             if (!funcionario) {
                 return res.status(400).send({ message: "Funcionário não encontrado" });
             }
+            console.log(funcionario.ID)
     
             const carro = {
                 Cor: cor,
                 Placa: placa,
                 Modelo: modelo,
                 Ano: ano,
-                FuncionarioID: funcionario.id
+                FuncionarioID: funcionario.ID
             };
     
             console.log("Dados do carro:", carro);
