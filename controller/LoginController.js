@@ -31,8 +31,8 @@ export default class LoginController {
         return res.status(422).json({ message: "EDV e/ou senha inválidos" });
       }
 
-      const token = jwt.sign({ id: user.ID }, process.env.SECRET, {
-        expiresIn: 300 // expires in 5min
+      const token = jwt.sign({ id: user.ID, adm: user.adm }, process.env.SECRET, {
+        expiresIn: "1d"
       });
 
       return res.status(200).send({ auth: true, token: token });
