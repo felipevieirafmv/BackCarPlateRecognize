@@ -31,3 +31,13 @@ CREATE TABLE Carro (
     FuncionarioID INT,
     FOREIGN KEY (FuncionarioID) REFERENCES Funcionario(ID)
 );
+
+CREATE TABLE Log (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    CarroID INT,
+    FuncionarioID INT,
+    HoraEntrada DATETIME,
+    HoraSaida DATETIME,
+    FOREIGN KEY (CarroID) REFERENCES Carro(ID),
+    FOREIGN KEY (FuncionarioID) REFERENCES Funcionario(ID)
+);
