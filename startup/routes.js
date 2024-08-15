@@ -8,7 +8,7 @@ const routes = express.Router();
 // Funcionario
 routes.post("/api/funcionario/", FuncionarioController.create);
 routes.get("/api/funcionario/", FuncionarioController.getAllFuncionario);
-routes.get("/api/funcionario/:id", FuncionarioController.getFuncionarioById);
+routes.get("/api/funcionario/id/:id", FuncionarioController.getFuncionarioById);
 routes.get("/api/funcionario/:edv", FuncionarioController.getFuncionarioByEdv);
 routes.put("/api/funcionario/:id", FuncionarioController.updateFuncionario);
 routes.delete("/api/funcionario/:id", FuncionarioController.delete);
@@ -17,6 +17,8 @@ routes.delete("/api/funcionario/:id", FuncionarioController.delete);
 routes.post("/api/carro/", CarroController.create); 
 routes.get("/api/carro/", CarroController.getAllCarros); 
 routes.get("/api/carro/:id", CarroController.getCarroById);
+routes.get("/api/carro/funcId/:funcId", CarroController.getCarrosByEdv);
+routes.get("/api/carro/placa/:placa", CarroController.getCarrosByPlaca);
 routes.put("/api/carro/:id", CarroController.updateCarro); 
 routes.delete("/api/carro/:id", CarroController.delete); 
 

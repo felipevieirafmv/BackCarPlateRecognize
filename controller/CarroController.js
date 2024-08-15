@@ -12,6 +12,32 @@ export default class CarroController {
         }
     }
 
+    static async getCarrosByEdv(req, res) {
+        const { funcId } = req.params;
+        try {
+            const carros = await Carro.findAll({ where: { FuncionarioID: funcId } });
+            if (!carros) {
+                return res.status(404).send({ message: "Carros não encontrados" });
+            }
+            return res.status(200).json(carros);
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
+
+    static async getCarrosByPlaca(req, res) {
+        const { placa } = req.params;
+        try {
+            const carro = await Carro.findOne({ where: { Placa: placa } });
+            if (!carro) {
+                return res.status(404).send({ message: "Carro não encontrado" });
+            }
+            return res.status(200).json(carro);
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
+
     static async getCarroById(req, res) {
         const { id } = req.params;
         try {
