@@ -1,0 +1,13 @@
+{
+    "nome": "teste",
+    "edv": "12345678",
+    "senha": "a",
+    "endereco": {
+        "cep": "81230000",
+        "cidade": "Curitiba",
+        "bairro": "cic",
+        "rua": "João Dembinski",
+        "uf": "PR"
+    },
+    "adm": true
+}
