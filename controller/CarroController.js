@@ -1,5 +1,6 @@
 import Carro from '../model/carro.js';
 import Funcionario from '../model/funcionario.js';
+import Log from '../model/log.js';
 
 export default class CarroController {
 
@@ -143,6 +144,43 @@ export default class CarroController {
 
         } catch (error) {
             console.error("Erro ao deletar carro:", error);
+            return res.status(500).send({ error: error.message });
+        }
+    }
+
+    static async searchByLog(req, res){
+        console.log("Entrou aqui")
+        const a = req
+        try {
+            const funcionario = await Funcionario.findOne({
+                where: {
+                    edv: 12345678
+                }
+            });
+
+            const carro2 = await Carro.findOne({
+                where: {
+                    placa: 1234567
+                }
+            })
+    
+            if (!funcionario || !carro2) {
+                return res.status(400).send({ message: "Deu ruim" });
+            }
+    
+            const log = {
+                HoraEntrada: (new Date()).toLocaleString(),
+                HoraSaida: (new Date()).toLocaleString(),
+                FuncionarioID: funcionario.ID,
+                CarroID: carro2.ID
+            };
+    
+            const createdLog = await Log.create(log);
+    
+            return res.status(201).send({ message: "Carro cadastrado com sucesso", body: createdLog });
+    
+        } catch (error) {
+            console.error("Erro ao criar carro: ", error);
             return res.status(500).send({ error: error.message });
         }
     }
