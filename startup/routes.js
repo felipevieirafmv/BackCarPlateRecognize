@@ -26,6 +26,6 @@ routes.delete("/api/carro/:id", CarroController.delete);
 routes.post("/api/login/", LoginController.login)
 
 //Log
-routes.get("/api/log/", CarroController.searchByLog)
+routes.post("/api/log/", CarroController.searchLogByDate)
 
 export { routes as default };

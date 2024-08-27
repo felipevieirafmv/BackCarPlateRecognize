@@ -89,8 +89,7 @@ export default class CarroController {
             console.error("Erro ao criar carro: ", error);
             return res.status(500).send({ error: error.message });
         }
-    }
-    
+    } 
 
     static async updateCarro(req, res) {
         const { cor, placa, modelo, ano, funcionarioID } = req.body;
@@ -148,9 +147,20 @@ export default class CarroController {
         }
     }
 
-    static async searchByLog(req, res){
-        console.log("Entrou aqui")
-        const a = req
+    static async searchLogByDate(req, res){
+        // const dateToSearch = req.body.date;
+        // try {
+        //     const log = await Log.findOne(
+        //         {}
+        //     );
+        //     if (!carro) {
+        //         return res.status(404).send({ message: "Carro não encontrado" });
+        //     }
+        //     return res.status(200).json(carro);
+        // } catch (error) {
+        //     return res.status(500).json({ error: error.message });
+        // }
+
         try {
             const funcionario = await Funcionario.findOne({
                 where: {
@@ -169,8 +179,10 @@ export default class CarroController {
             }
     
             const log = {
-                HoraEntrada: (new Date()).toLocaleString(),
-                HoraSaida: (new Date()).toLocaleString(),
+                DiaEntrada: new Date().getDate(),
+                HoraEntrada: new Date().getTime(),
+                DiaSaida: new Date().getDate(),
+                HoraSaida: new Date().getTime(),
                 FuncionarioID: funcionario.ID,
                 CarroID: carro2.ID
             };
@@ -183,5 +195,7 @@ export default class CarroController {
             console.error("Erro ao criar carro: ", error);
             return res.status(500).send({ error: error.message });
         }
+
+
     }
 }

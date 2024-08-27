@@ -9,13 +9,21 @@ const Log = sequelize.define('Log', {
     autoIncrement: true,
     primaryKey: true,
   },
-  HoraEntrada: {
-    type: DataTypes.DATE,
+  DiaEntrada: {
+    type: DataTypes.DATEONLY,
     allowNull: false
   },
-  HoraSaida: {
-    type: DataTypes.DATE,
+  HoraEntrada: {
+    type: DataTypes.TIME,
     allowNull: false
+  },
+  DiaSaida: {
+    type: DataTypes.DATEONLY,
+    allowNull: true
+  },
+  HoraSaida: {
+    type: DataTypes.TIME,
+    allowNull: true
   },
   FuncionarioID: {
     type: DataTypes.INTEGER,

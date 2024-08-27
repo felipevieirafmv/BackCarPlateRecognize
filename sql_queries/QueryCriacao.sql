@@ -36,8 +36,12 @@ CREATE TABLE Log (
     ID INT AUTO_INCREMENT PRIMARY KEY,
     CarroID INT,
     FuncionarioID INT,
-    HoraEntrada DATETIME,
-    HoraSaida DATETIME,
+    DiaEntrada DATE,
+    HoraEntrada TIME,
+    DiaSaida DATE,
+    HoraSaida TIME,
     FOREIGN KEY (CarroID) REFERENCES Carro(ID),
     FOREIGN KEY (FuncionarioID) REFERENCES Funcionario(ID)
 );
+
+select * from log
