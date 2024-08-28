@@ -2,6 +2,7 @@ import express from "express";
 import FuncionarioController from "../controller/FuncionarioController.js";
 import CarroController from "../controller/CarroController.js"; 
 import LoginController from "../controller/LoginController.js";
+import LogController from "../controller/LogController.js";
 
 const routes = express.Router();
 
@@ -26,6 +27,6 @@ routes.delete("/api/carro/:id", CarroController.delete);
 routes.post("/api/login/", LoginController.login)
 
 //Log
-routes.post("/api/log/", CarroController.searchLogByDate)
+routes.post("/api/log/", LogController.searchLogByDate)
 
 export { routes as default };

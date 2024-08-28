@@ -1,6 +1,5 @@
 import Carro from '../model/carro.js';
 import Funcionario from '../model/funcionario.js';
-import Log from '../model/log.js';
 
 export default class CarroController {
 
@@ -145,57 +144,5 @@ export default class CarroController {
             console.error("Erro ao deletar carro:", error);
             return res.status(500).send({ error: error.message });
         }
-    }
-
-    static async searchLogByDate(req, res){
-        // const dateToSearch = req.body.date;
-        // try {
-        //     const log = await Log.findOne(
-        //         {}
-        //     );
-        //     if (!carro) {
-        //         return res.status(404).send({ message: "Carro não encontrado" });
-        //     }
-        //     return res.status(200).json(carro);
-        // } catch (error) {
-        //     return res.status(500).json({ error: error.message });
-        // }
-
-        try {
-            const funcionario = await Funcionario.findOne({
-                where: {
-                    edv: 12345678
-                }
-            });
-
-            const carro2 = await Carro.findOne({
-                where: {
-                    placa: 1234567
-                }
-            })
-    
-            if (!funcionario || !carro2) {
-                return res.status(400).send({ message: "Deu ruim" });
-            }
-    
-            const log = {
-                DiaEntrada: new Date().getDate(),
-                HoraEntrada: new Date().getTime(),
-                DiaSaida: new Date().getDate(),
-                HoraSaida: new Date().getTime(),
-                FuncionarioID: funcionario.ID,
-                CarroID: carro2.ID
-            };
-    
-            const createdLog = await Log.create(log);
-    
-            return res.status(201).send({ message: "Carro cadastrado com sucesso", body: createdLog });
-    
-        } catch (error) {
-            console.error("Erro ao criar carro: ", error);
-            return res.status(500).send({ error: error.message });
-        }
-
-
     }
 }
