@@ -66,4 +66,18 @@ export default class LogController {
         //     return res.status(500).send({ error: error.message });
         // }
     }
+
+    static async getByCar(req, res){
+        const { id } = req.params
+
+        try {
+            const logs = await Log.findAll({ where: { CarroID: id } });
+            if (!logs) {
+                return res.status(404).send({ message: "Carro não encontrado" });
+            }
+            return res.status(200).json(logs);
+        } catch (error) {
+            return res.status(500).json({ error: error.message });
+        }
+    }
 }

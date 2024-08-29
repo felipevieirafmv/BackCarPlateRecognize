@@ -43,5 +43,3 @@ CREATE TABLE Log (
     FOREIGN KEY (CarroID) REFERENCES Carro(ID),
     FOREIGN KEY (FuncionarioID) REFERENCES Funcionario(ID)
 );
-
-select * from log

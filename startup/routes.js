@@ -28,5 +28,6 @@ routes.post("/api/login/", LoginController.login)
 
 //Log
 routes.post("/api/log/", LogController.searchLogByDate)
+routes.get("/api/log/:id", LogController.getByCar)
 
 export { routes as default };
