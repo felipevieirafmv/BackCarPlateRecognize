@@ -91,7 +91,7 @@ export default class CarroController {
     } 
 
     static async updateCarro(req, res) {
-        const { cor, placa, modelo, ano, funcionarioID } = req.body;
+        const { cor, placa, modelo, ano, edv } = req.body;
         const { id } = req.params;
 
         if (!id) {
@@ -99,19 +99,25 @@ export default class CarroController {
         }
 
         try {
-            const [updated] = await Carro.update(
-                {
-                    cor: cor,
-                    placa: placa,
-                    modelo: modelo,
-                    ano: ano,
-                    funcionarioID: funcionarioID
-                },
-                {
-                    where: { id: id }
+            const funcionario = await Funcionario.findOne({
+                where: {
+                    edv: edv
                 }
+            });
+    
+            if (!funcionario) {
+                return res.status(400).send({ message: "Funcionário não encontrado" });
+            }
+            const updated = await Carro.update(
+                {
+                    Cor: cor,
+                    Placa: placa,
+                    Modelo: modelo,
+                    Ano: ano,
+                    FuncionarioID: funcionario.ID},
+                { where: { id } }
             );
-
+            
             if (updated) {
                 const updatedCarro = await Carro.findByPk(id);
                 return res.status(200).send({ message: "Carro atualizado com sucesso", body: updatedCarro });

@@ -144,7 +144,7 @@ export default class FuncionarioController {
     }
 
     static async updateFuncionario(req, res) {
-        const { nome, edv, senha, adm } = req.body;  // Adicionado 'adm'
+        const { nome, edv, senha, adm } = req.body;
         const { id } = req.params;
     
         if (!nome || !edv || !senha || adm === undefined) {
@@ -166,7 +166,7 @@ export default class FuncionarioController {
                     EDV: edv,
                     Senha: hashedSenha,
                     Salt: salt,
-                    Adm: adm  // Adicionado
+                    Adm: adm
                 },
                 {
                     where: {
